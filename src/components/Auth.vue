@@ -1,0 +1,47 @@
+<template>
+    <div>
+        <input type="email" name="email" v-model="email" placeholder="Email">
+        <input type="password" name="password" v-model="password" placeholder="Senha">
+        <button @click="login">Login</button>
+        <p>Não tem uma conta? <router-link to="/signup">Crie uma agora!</router-link></p>
+        <router-link to="/success">Teste</router-link>
+        <router-link to="/posts" v-if="cUser"> | Página de Posts</router-link>
+    </div>
+</template>
+
+<script>
+import firebase from 'firebase'
+export default {
+    name: 'Auth',
+    data: () => {
+        return {
+            email: '',
+            password: '',
+            cUser: firebase.auth().currentUser
+        }
+    },
+    methods: {
+        login() {
+            if (this.email && this.password) {
+                firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+                    this.$router.replace("success"),
+                    function(err) {
+                        alert("Deu xabú! " + err.message)
+                    }
+                )
+            } else {
+                if (this.email === "") {
+                    alert("Faltou o email");
+                }
+                if (this.password === "") {
+                    alert("Faltou a senha");
+                }
+            }
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>
