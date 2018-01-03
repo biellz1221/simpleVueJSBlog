@@ -1,11 +1,13 @@
 <template>
     <div>
-        <p>Vamos criar uma nova conta!</p>
-        <input type="email" name="email" placeholder="Email" v-model="email">
-        <input type="password" name="password" placeholder="Senha" v-model="password">
-        <input type="password" name="password-confirm" placeholder="Comfirmar Senha" v-model="passwordConfirm">
-        <button @click="criarConta">Criar Conta</button>
-        <p>Já tinha uma conta nessa porra? <router-link to="/">Então loga nesse caralho, animal!</router-link></p>
+        <linha-container>
+            <p>Vamos criar uma nova conta!</p>
+            <input type="email" name="email" placeholder="Email" v-model="email">
+            <input type="password" name="password" placeholder="Senha" v-model="password">
+            <input type="password" name="password-confirm" placeholder="Comfirmar Senha" v-model="passwordConfirm">
+            <button @click="criarConta">Criar Conta</button>
+            <p>Já tinha uma conta nessa porra? <router-link to="/">Então loga nesse caralho, animal!</router-link></p>
+        </linha-container>
     </div>
 </template>
 

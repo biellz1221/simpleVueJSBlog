@@ -10,9 +10,9 @@ Vue.use(Router)
 export const router = new Router ({
     mode: 'history',
     routes: [
-        { path: '*', name: 'Auth', component: Auth },
+        { path: '*', name: '', component: Auth },
         { path: '/', name: 'Auth', component: Auth },
-        { path: '/auth', name: 'Auth', component: Auth },
+        { path: '/auth', name: '', component: Auth },
         { path: '/signup', name: 'SignUp', component: signUp},
         { path: '/success', name: 'AuthSuccess', component: AuthSuccess, meta: {requiresAuth: true} },
         { path: '/categorias', name: 'Categorias', component: Categorias, meta: {requiresAuth: true} },        

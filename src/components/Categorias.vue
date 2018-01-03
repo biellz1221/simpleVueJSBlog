@@ -1,15 +1,25 @@
 <template>
-  <div>
-      Inserir umas categorias aí nessa porra!
-      <input type="text" name="categoria" v-model='categoria'>
-      <p>{{categoria}}</p>
-      <button @click="insereCategoria">Mete a Categoria aí</button>
-      <div style="background: lightgreen; color: #333" v-if="mostraMsg">Inseriu essa porra malandro</div>
-      <hr>
-      <ul>
-        <li v-for="(categoria, index) in categorias" :key='index'>{{categoria.nome}}</li>
-      </ul>
-  </div>
+    <div>
+        <linha-container>
+            <div class="flex-container categorias">
+                <div class="lista-categorias">
+                    <span class="titulo-lista">Lista de Categorias</span>
+                    <ul>
+                        <li v-for="(categoria, index) in categorias" :key='index'>{{categoria.nome}}</li>
+                    </ul>
+                </div>
+                <div class="inserir-categoria">
+                    <span class="insira-categoria">Insira uma Categoria</span>
+                    <p>Basta digitar o nome e apertar em inserir.</p>
+                    <input type="text" name="categoria" placeholder="Nome da Categoria" v-model='categoria' @keyup.enter="insereCategoria" maxlength="30">
+                    <button @click="insereCategoria">Inserir</button>
+                </div>
+            </div>
+            <div v-if="mostraMsg">
+                {{msgSucessoErro}}
+            </div>
+        </linha-container>
+    </div>
 </template>
 
 <script>
@@ -18,7 +28,8 @@ export default {
     data: () => {
         return {
             categoria: '',
-            mostraMsg: false,
+            mostraMsg: true,
+            msgSucessoErro: 'Categoria inserida com sucesso!',
         }
     },
     firebase: {

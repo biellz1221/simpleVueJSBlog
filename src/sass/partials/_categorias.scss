@@ -1,0 +1,82 @@
+.flex-container.categorias{
+    justify-content: center !important;
+}
+
+// lista de categorias
+.lista-categorias {
+    max-width: 80%;
+    margin-right: 20px;
+    .titulo-lista {
+        display: block;
+        width: 100%;
+        border-radius: 5px 5px 0 0;
+        background: $cinza-escuro;
+        padding: 15px 20px;
+        color: $branco;
+        font-family: $courgette;
+    }
+    ul {
+        width: 100%;
+        border: 1px solid $cinza-claro;
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+        li {
+            padding: 15px 20px;
+            color: darken($texto, 5%);
+            background: $cinza-mais-claro;
+            border-bottom: 1px solid $cinza-claro;
+            &:last-child {
+                border: none;
+                border-radius: 0 0 5px 5px;
+            }
+            &:nth-child(2n) {
+                background: darken($cinza-mais-claro, 10%)
+            }
+        }
+    }
+}
+
+// inserir categorias
+.inserir-categoria {
+    text-align: center;
+    .insira-categoria {
+        font-family: $courgette;
+        font-size: 1.5em;
+        color: darken($texto, 10%);
+        display: block;
+        margin: 0 0 10px;
+    }
+    p {
+        margin: 0 0 10px;
+        font-size: .9em;
+        color: $texto;
+    }
+    input {
+        padding: 15px;
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid $cinza-claro;
+        background: $cinza-mais-claro;
+        margin: 0 0 10px;
+        &::placeholder {
+            font-family: $courgette;
+        }
+    }
+    button {
+        font-weight: bold;
+        text-transform: uppercase;
+        color: $texto;
+        background: darken($cinza-mais-claro, 5%);
+        border: 1px solid $cinza-claro;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: .3s;
+        display: block;
+        width: 100%;
+        padding: 15px;
+        &:hover {
+            background: darken($cinza-mais-claro, 15%);
+            color: $texto;
+        }
+    }
+}
