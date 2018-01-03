@@ -1,11 +1,14 @@
 <template>
     <div>
-        <input type="email" name="email" v-model="email" placeholder="Email">
-        <input type="password" name="password" v-model="password" placeholder="Senha">
-        <button @click="login">Login</button>
-        <p>Não tem uma conta? <router-link to="/signup">Crie uma agora!</router-link></p>
-        <router-link to="/success">Teste</router-link>
-        <router-link to="/posts" v-if="cUser"> | Página de Posts</router-link>
+        <div v-if="!cUser">
+            <input type="email" name="email" v-model="email" placeholder="Email">
+            <input type="password" name="password" v-model="password" placeholder="Senha">
+            <button @click="login">Login</button>
+            <p>Não tem uma conta? <router-link to="/signup">Crie uma agora!</router-link></p>
+        </div>
+        <div v-else>
+            <p>Você já está logado como <b>{{userEmail}}</b></p>
+        </div>
     </div>
 </template>
 
@@ -17,7 +20,8 @@ export default {
         return {
             email: '',
             password: '',
-            cUser: firebase.auth().currentUser
+            cUser: firebase.auth().currentUser,
+            userEmail: firebase.auth().currentUser.email
         }
     },
     methods: {

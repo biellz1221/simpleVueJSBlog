@@ -1,0 +1,30 @@
+// COLORS
+$branco: #FFF;
+$texto:#707070;
+$cinza-claro: #CCC;
+$cinza-mais-claro: #f9f9f9;
+$verde-elo-claro: #08B7A8;
+$verde-elo-escuro: #269550;
+
+$google-plus: #db4437;
+$facebook: #3b5998;
+$twitter: #1da1f2;
+$instagram: #8a3ab9;
+$linkedin: #0077b5;
+
+$verde-sucesso: #4BB543;
+$vermelho-erro: #ff0033;
+
+// Font-families
+
+$lato: 'Lato', Arial, Helvetica, sans-serif;
+
+// SCREEN SIZES
+$mobile-width: 768px;
+$tablet-width: $mobile-width + 1px;
+$desktop-width: 1280px;
+$large-desktop-width: 1440px;
+
+$mobile: "(max-width: #{$mobile-width})";
+$tablet: "(min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px})";
+$desktop: "(min-width: #{$desktop-width}) and (max-width: #{$large-desktop-width - 1px})";
