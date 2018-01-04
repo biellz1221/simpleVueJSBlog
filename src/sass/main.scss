@@ -1,7 +1,13 @@
 @import 'base/reset';
 @import 'base/fonts';
 @import 'base/variables';
+
+@import 'css/quill.core';
+@import 'css/quill.snow';
+//@import 'css/quill.bubble';
+
 @import 'partials/messages';
+@import 'partials/paginate';
 
 body {
     font-family: $lato;

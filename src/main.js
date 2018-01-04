@@ -8,6 +8,8 @@ import {fbConfig} from './fbConfig'
 import LinhaContainer from './components/estruturais/LinhaContainer.vue'
 import paginator from './components/estruturais/Paginate.vue'
 
+
+
 Vue.use(VueFire);
 
 Vue.component('linha-container', LinhaContainer);

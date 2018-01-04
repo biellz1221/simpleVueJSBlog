@@ -2,9 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from 'firebase'
 import Auth from './components/Auth.vue'
-import AuthSuccess from './components/AuthSuccess.vue'
+import Dashboard from './components/Dashboard.vue'
 import signUp from './components/SignUp.vue'
 import Categorias from './components/Categorias.vue'
+import Posts from './components/Posts.vue'
+
+import AddPost from './components/AddPost.vue'
+import PostList from './components/PostList.vue'
 Vue.use(Router)
 
 export const router = new Router ({
@@ -14,8 +18,18 @@ export const router = new Router ({
         { path: '/', name: 'Auth', component: Auth },
         { path: '/auth', name: '', component: Auth },
         { path: '/signup', name: 'SignUp', component: signUp},
-        { path: '/success', name: 'AuthSuccess', component: AuthSuccess, meta: {requiresAuth: true} },
+        { path: '/admin', name: 'Dashboard', component: Dashboard, meta: {requiresAuth: true} },
         { path: '/categorias', name: 'Categorias', component: Categorias, meta: {requiresAuth: true} },        
+        { 
+            path: '/posts', 
+            name: 'Posts', 
+            component: Posts, 
+            meta: {requiresAuth: true},
+            children: [
+                {path: 'new', component: AddPost, name: "AddNewPost"},
+                {path: 'list', component: PostList, name: "PostList"},
+            ]
+        },        
     ],
 })
 

@@ -1,0 +1,22 @@
+.paginate {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    button {
+        padding: 10px;
+        background: linear-gradient($cinza-mais-claro, lighten($cinza-claro, 10%));
+        border: 1px solid $cinza-claro;
+        cursor: pointer;
+        color: $texto;
+        &:hover {
+            background: linear-gradient(lighten($cinza-claro, 10%), $cinza-mais-claro);
+        }
+    }
+    button:disabled{
+        opacity: .5;
+        color: $preto;
+        &:hover {
+            background: linear-gradient($cinza-mais-claro, lighten($cinza-claro, 10%));
+        }
+    }
+}

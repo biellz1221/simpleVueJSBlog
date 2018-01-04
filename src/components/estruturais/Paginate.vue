@@ -10,9 +10,10 @@
         </li>
     </ul><br><br>
 
-    <span v-for="(npag, index) in pages" :key="index">{{npag}}<br></span>
-
+    
+    <span v-for="(item, index) in categorias" :key="index">{{item}}<br></span>
     {{dbTable}}
+    
 </div>
 </template>
 
@@ -27,25 +28,39 @@ export default {
             brr: [],
             arr: [],
             actualPage: 0,
+            executed: false,
+            tabela: '',
         }
     },
     firebase: {
         categorias: {
+            //source: fbDB.ref('categorias'),
             source: fbDB.ref(this.dbTable),
+        },
+        categotestes: {
+            source: fbDB.ref('categorias')
         }
     },
     mounted(){
-        this.loadItems();
+        // this.tabela = this.dbTable.toString();
+        // console.log("Var Tabela = " + this.tabela)
+        // setTimeout(() =>{
+        //     this.loadItems();
+        // }, 2000)
+    },
+    computed: {
     },
     methods: {
-        loadItems(){
-            this.arr = this.items;
-            do {
-                this.brr = this.arr.splice(0, 2);
-                this.pages.push(this.brr);
-                this.brr = [];
-            } while(this.arr.length > 0);
-            console.log(this.pages)
+        loadItems(){    
+            if(this.items != '') {
+                this.executed = true;
+                console.log(this.executed)
+                do {
+                    this.brr = this.items.splice(0, 2);
+                    this.pages.push(this.brr);
+                    this.brr = [];
+                } while(this.items.length > 0);
+            }
         },
         pagination(changer) {
             if(changer === 'prev') {

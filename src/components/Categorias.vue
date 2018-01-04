@@ -2,7 +2,7 @@
     <div>
         <linha-container>
             <div class="flex-container categorias">
-                <!-- <div class="lista-categorias">
+                <div class="lista-categorias">
                     <span class="titulo-lista">Lista de Categorias</span>
                     <ul>
                         <transition name="fade">
@@ -12,11 +12,23 @@
                         </transition>
                         <li v-for="(categoria, index) in pages[actualPage]" :key='index'>{{categoria.nome}}</li>
                     </ul>
-                    
-                    <button @click="pagination(1)" v-if="actualPage < pages.length - 1">próxima</button>
-                    {{ actualPage + 1 }}
-                    <button @click="pagination(-1)" v-if="actualPage > 0">anterior</button>
-                </div> -->
+                    <div class="paginate">
+                        <button @click="pagination('prev')" v-if="actualPage > 0" class="btn-pag-prev">
+                            <i class="fa fa-angle-left"></i>
+                        </button>
+                        <span class="paginate-numbers">
+                            <span v-for="(npag,index) in pages" :key="index" :class="'paginate-number-'+index">
+                                <span v-if="index === actualPage" class="paginate-active">
+                                    <button disabled="disabled"  class="btn-pag-num">{{index+1}}</button>
+                                </span>
+                                <button v-else @click="pagination(index)" class="btn-pag-num">{{index+1}}</button>
+                            </span>
+                        </span>
+                        <button @click="pagination('next')" v-if="actualPage < pages.length - 1" class="btn-pag-next">
+                            <i class="fa fa-angle-right"></i>
+                        </button>
+                    </div>
+                </div>
                 
                 <div class="inserir-categoria">
                     <span class="insira-categoria">Insira uma Categoria</span>
@@ -31,11 +43,8 @@
                 </div>
             </transition>
         </linha-container>
+        
 
-<!-- <span v-for="(npag, index) in pages.length" :key="index">{{npag}}<br></span> -->
-
-<br><br><br><br><br>
-        <v-pages :items="arrayDasCategorias" dbTable="categorias"></v-pages>
     </div>
 </template>
 
@@ -45,13 +54,13 @@ export default {
     data: () => {
         return {
             categoria: '',
-            mostraMsg: false,
             msgSucessoErro: 'Categoria inserida com sucesso!',
-            loaded: false,
+            actualPage: 0,
             arrayDasCategorias: [],
             pages: [],
             brr: [],
-            actualPage: 0,
+            mostraMsg: false,
+            loaded: false,
         }
     },
     firebase: {
@@ -60,28 +69,24 @@ export default {
         }
     },
     mounted(){
-        fbDB.ref('categorias').on('child_added',(snapshot) => {
-            //console.log(snapshot.val().nome);
-            this.arrayDasCategorias.push(snapshot.val().nome)
-        })
-        // fbDB.ref('categorias').once('value').then( 
-        //     (user) => {
-        //         this.arrayDasCategorias = this.categorias;
-        //         this.loaded = true;
-        //         do {
-        //             this.brr = this.arrayDasCategorias.splice(0, 2);
-        //             this.pages.push(this.brr);
-        //             this.brr = [];
-        //         } while(this.arrayDasCategorias.length > 0)
-        //     },
-        //     (err) => {
-        //         console.log(err.message)
-        //     }
-        // )
+        fbDB.ref('categorias').once('value').then( 
+            (user) => {
+                this.arrayDasCategorias = this.categorias;
+                this.loaded = true;
+                do {
+                    this.brr = this.arrayDasCategorias.splice(0, 5);
+                    this.pages.push(this.brr);
+                    this.brr = [];
+                } while(this.arrayDasCategorias.length > 0)
+            },
+            (err) => {
+                console.log(err.message)
+            }
+        )
     },
     methods: {
         insereCategoria(){
-            if (this.categoria != '') {
+            if (this.categoria) {
                 fbDB.ref('categorias').push({
                     nome: this.categoria,
                 });
@@ -89,11 +94,17 @@ export default {
                 this.mostraMsg = true
                 setTimeout(() => {this.mostraMsg = false}, 1500)
             } else {
-                alert("Can't insert a category without a name!")
+                alert("Não pode inserir uma categoria sem nome!")
             };
         },
         pagination(changer) {
-            this.actualPage = this.actualPage + changer;
+            if(changer === 'prev') {
+                this.actualPage = this.actualPage - 1;    
+            } else if (changer === 'next') {
+                this.actualPage = this.actualPage + 1;    
+            } else {
+                this.actualPage = changer;
+            }
         },
     }
 }
