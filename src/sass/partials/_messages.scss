@@ -1,0 +1,26 @@
+.div-info {
+    width: calc(100% - 40px);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 0;
+    position: absolute;
+    top: 30px;
+    opacity: 1;
+    transition: .3s;
+}
+
+.info-success {
+    background: lighten($verde-sucesso, 30%);
+    border-color: darken($verde-sucesso, 20%);
+    color:  darken($verde-sucesso, 20%);
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}

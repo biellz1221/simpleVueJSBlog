@@ -26,9 +26,7 @@ router.beforeEach((to, from, next) => {
     if(requiresAuth && !currentUser){
         alert("É necessário fazer login antes de prosseguir")
         next('/auth')
-    } /*else if (!requiresAuth && currentUser) {
-        next('/success')
-    } */else {
+    } else {
         next();
     }
 })
