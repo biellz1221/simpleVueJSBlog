@@ -4,6 +4,10 @@
             <!-- <label for="titulo">Título</label> -->
             <input type="text" name="titulo" v-model="newPost.postTitle" placeholder="Título do Post">
         </div>
+        <div class="campo">
+            <label for="resumo">Resumo do Post</label>
+            <textarea name="resumo" id="" maxlength="300" v-model="newPost.postExcerpt"></textarea>
+        </div>
         <div class="campo q-editor">
             <quill-editor v-model="newPost.postContent"></quill-editor>
         </div>
@@ -17,7 +21,10 @@
             <label for="tags">Tags</label>
             <input type="text" name="tags" @keydown.enter="addTag" placeholder="Tags saparated by comma" v-model="tagToAdd">
             <button @click="addTag">Inserir Tag</button><br>
+            <button class="new-post-tag" v-for="(tag, index) in newPost.postTags" :key="index" @click="removeTag(index)">{{tag}}</button>
         </div>
+        <div class="campo"><button @click="addPost(newPost)">Adicionar Post</button></div>
+        <button @click="clean">Limpar</button>
         <transition name="fade">
             <div class="div-info info-success" v-if="mostraMsg">
                 {{msgSucessoErro}}
@@ -44,7 +51,7 @@ export default {
             },
             tagToAdd: '',
             arrayDasCategorias: [],
-            msgSucessoErro: 'Categoria inserida com sucesso!',
+            msgSucessoErro: 'Post salvo com sucesso!',
             mostraMsg: false,
             loaded: false,
         }
@@ -54,24 +61,36 @@ export default {
             source: fbDB.ref('categorias'),
         }
     },
+    computed: {
+        excerpt() {
+            
+        }
+    },
     mounted() {
     },
     methods: {
         clean() {
-            this.postTitle = '';
-            this.postExcerpt = '';
-            this.postContent = '';
-            this.postCategory = '';
-            this.postTags = [];
+            this.newPost.postTitle = '';
+            this.newPost.postExcerpt = '';
+            this.newPost.postContent = '';
+            this.newPost.postCategory = '';
+            this.newPost.postTags = [];
         },
-        insertPost(post) {
-            if (this.postTitle && postContent && postCategory) {
+        addPost(post) {
+            if (this.newPost.postTitle && this.newPost.postContent && this.newPost.postCategory && this.newPost.postExcerpt) {
                 fbDB.ref('posts').push(post);
-                
-                this.mostraMsg = true
-                setTimeout(() => {this.mostraMsg = false}, 1500)
-            } else {
-                alert("Não pode inserir uma categoria sem nome!")
+                this.mostraMsg = true;
+                console.log("inseriu post")
+                setTimeout(() => {this.mostraMsg = false}, 1500);
+                this.clean();
+            } else if(!this.newPost.postTitle) {
+                alert("Não pode inserir um post sem título!")
+            } else if(!this.newPost.postContent) {
+                alert("Não pode inserir um post sem conteúdo!")
+            } else if(!this.newPost.postCategory) {
+                alert("Não pode inserir um post sem categoria!")
+            } else if(!this.newPost.postExcerpt) {
+                alert("Não pode inserir um post sem resumo!")
             };
         },
         addTag(){
@@ -80,6 +99,9 @@ export default {
                 this.newPost.postTags.push(add[i].trim())
             };
             this.tagToAdd = ''
+        },
+        removeTag(tag) {
+            this.newPost.postTags.splice(tag, 1);
         },
     },
     components: {
