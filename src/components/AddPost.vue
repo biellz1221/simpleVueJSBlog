@@ -2,10 +2,21 @@
     <div>
         <div class="campo">
             <!-- <label for="titulo">Título</label> -->
-            <input type="text" name="titulo" id="" v-model="newPost.postTitle" placeholder="Título do Post">
+            <input type="text" name="titulo" v-model="newPost.postTitle" placeholder="Título do Post">
         </div>
         <div class="campo q-editor">
-            <quill-editor style="" v-model="newPost.postContent"></quill-editor>
+            <quill-editor v-model="newPost.postContent"></quill-editor>
+        </div>
+        <div class="campo">
+            <label for="categorias">Categoria</label>
+            <select name="categorias" v-model="newPost.postCategory">
+                <option v-for="(categoria, index) in categorias" :key="index" :value="categoria.nome">{{categoria.nome}}</option>
+            </select>
+        </div>
+        <div class="campo">
+            <label for="tags">Tags</label>
+            <input type="text" name="tags" @keydown.enter="addTag" placeholder="Tags saparated by comma" v-model="tagToAdd">
+            <button @click="addTag">Inserir Tag</button><br>
         </div>
         <transition name="fade">
             <div class="div-info info-success" v-if="mostraMsg">
@@ -31,6 +42,7 @@ export default {
                 postTags: [],
                 postAuthorEmail: firebase.auth().currentUser.email
             },
+            tagToAdd: '',
             arrayDasCategorias: [],
             msgSucessoErro: 'Categoria inserida com sucesso!',
             mostraMsg: false,
@@ -41,6 +53,8 @@ export default {
         categorias: {
             source: fbDB.ref('categorias'),
         }
+    },
+    mounted() {
     },
     methods: {
         clean() {
@@ -59,7 +73,14 @@ export default {
             } else {
                 alert("Não pode inserir uma categoria sem nome!")
             };
-        }
+        },
+        addTag(){
+            let add = this.tagToAdd.split(',')
+            for (let i = 0; i < add.length; i++) {
+                this.newPost.postTags.push(add[i].trim())
+            };
+            this.tagToAdd = ''
+        },
     },
     components: {
         quillEditor
