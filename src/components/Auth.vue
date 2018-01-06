@@ -14,8 +14,8 @@
 
 <script>
 import firebase from 'firebase'
-import { mapGetters } from 'vuex'
-import {categoRef} from '../store'
+// import { mapGetters } from 'vuex'
+// import {categoRef} from '../store'
 export default {
     name: 'Auth',
     data: () => {
@@ -24,15 +24,13 @@ export default {
             password: '',
             cUser: firebase.auth().currentUser,
             userEmail: firebase.auth().currentUser.email,
-            
         }
     },
-    computed:{
-        ...mapGetters([
-            // Mounts the "safelyStoredNumber" getter to the scope of your component.
-            'categorias'
-        ])
-    },
+    // computed:{
+    //     ...mapGetters([
+    //         'categorias'
+    //     ])
+    // },
     methods: {
         login() {
             if (this.email && this.password) {
@@ -52,9 +50,9 @@ export default {
             }
         }
     },
-    created() {
-        this.$store.dispatch('setTodosRef', categoRef)
-    },
+    // created() {
+    //     this.$store.dispatch('setCategoriasRef', categoRef)
+    // },
 }
 </script>
 
