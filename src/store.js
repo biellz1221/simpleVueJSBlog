@@ -37,7 +37,14 @@ export const store = new Vuex.Store({
             }
         },
         isLoaded(state) {
-            state.loaded = !state.loaded
+            state.loaded = true
+        },
+        cleanPages(state, qLimpar) {
+            if(qLimpar === 'categorias') {
+                state.catPages = [];
+            } else if (qLimpar === 'posts') {
+                state.postPages = [];
+            }
         }
     },
     getters: {

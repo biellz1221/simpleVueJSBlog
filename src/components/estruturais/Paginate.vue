@@ -6,7 +6,7 @@
         </button>
         <span v-if="items === 'categorias'">
             <span class="paginate-numbers">
-                <span v-for="(npag,index) in catPages" :key="index" :class="'paginate-number-'+index">
+                <span v-for="(npag,index) in catPages" :key="index" :title="npag" :class="'paginate-number-'+index">
                     <span v-if="index === actualPage" class="paginate-active">
                         <button disabled="disabled"  class="btn-pag-num">{{index+1}}</button>
                     </span>
@@ -19,7 +19,7 @@
         </span>
         <span v-if="items === 'posts'">
             <span class="paginate-numbers">
-                <span v-for="(npag,index) in postPages" :key="index" :class="'paginate-number-'+index">
+                <span v-for="(npag,index) in postPages" :title="npag" :key="index" :class="'paginate-number-'+index">
                     <span v-if="index === actualPage" class="paginate-active">
                         <button disabled="disabled"  class="btn-pag-num">{{index+1}}</button>
                     </span>
@@ -39,7 +39,7 @@ import {fbDB} from '../../fbConfig'
 import { mapGetters } from 'vuex'
 import { categoRef, postRef } from '../../store'
 export default {
-    props: ['items', 'itemsPerPage'],
+    props: ['items', 'itemsPerPage', 'change'],
     data: () => {
         return {
             brr: [],
@@ -56,13 +56,16 @@ export default {
         ]),
     },
     created() {
-        if(this.items === 'categorias') {
-            this.loadCategories()
-        } else if (this.items === 'posts') {
-            this.loadPosts();
-        }
+        this.loadAll()
     },
     methods: {
+        loadAll() {
+            if(this.items === 'categorias') {
+                this.loadCategories()
+            } else if (this.items === 'posts') {
+                this.loadPosts();
+            }
+        },
         pagination(changer) {
             this.$store.commit('movePages', changer)
         },
@@ -71,7 +74,9 @@ export default {
             setTimeout(()=>{
                 this.isLoaded();
                 if (this.$store.state.catPages.length > 0){
-                    return
+                    this.$store.commit('cleanPages', this.items);
+                    this.itemList = this.categorias;
+                    this.renderPages(this.items);
                 } else {
                     this.itemList = this.categorias;
                     this.renderPages(this.items);
@@ -83,7 +88,9 @@ export default {
             setTimeout(()=>{
                 this.isLoaded();
                 if (this.$store.state.postPages.length > 0){
-                     return
+                    this.$store.commit('cleanPages', this.items);
+                    this.itemList = this.posts;
+                    this.renderPages(this.items);
                 } else {
                     this.itemList = this.posts;
                     this.renderPages(this.items);
@@ -109,5 +116,11 @@ export default {
             } while(this.itemList.length > 0);
         }
     },
+    watch: {
+        change: function (val, oldVal) {
+            //console.log("prop change mudou de "+oldVal+" para "+val);
+            this.loadAll()
+        }
+    }
 }
 </script>
