@@ -9,6 +9,7 @@ import Posts from './components/Posts.vue'
 
 import AddPost from './components/AddPost.vue'
 import PostList from './components/PostList.vue'
+import EditPost from './components/EditPost.vue'
 Vue.use(Router)
 
 export const router = new Router ({
@@ -28,6 +29,7 @@ export const router = new Router ({
             children: [
                 {path: 'new', component: AddPost, name: "AddNewPost"},
                 {path: 'list', component: PostList, name: "PostList"},
+                {path: 'edit/:key', component: EditPost, name: "EditPost"},
             ]
         },        
     ],

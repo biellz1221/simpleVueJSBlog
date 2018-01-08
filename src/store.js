@@ -17,7 +17,8 @@ export const store = new Vuex.Store({
         postPages: [],
         catPages: [],
         actualPage: 0,
-        loaded: false
+        loaded: false,
+        edPostKey: '',
     },
     mutations: {
         ...firebaseMutations,
@@ -45,6 +46,9 @@ export const store = new Vuex.Store({
             } else if (qLimpar === 'posts') {
                 state.postPages = [];
             }
+        },
+        setEditPostKey(state, key) {
+            state.edPostKey = key;
         }
     },
     getters: {
@@ -54,16 +58,13 @@ export const store = new Vuex.Store({
         postPages: state => state.postPages,
         actualPage: state => state.actualPage,
         loaded: state => state.loaded,
+        edPostKey: state => state.edPostKey,
     },
     actions: {
-        setCategoriasRef: firebaseAction(({
-            bindFirebaseRef
-        }, ref) => {
+        setCategoriasRef: firebaseAction(({ bindFirebaseRef }, ref) => {
             bindFirebaseRef('categorias', ref)
         }),
-        setPostsRef: firebaseAction(({
-            bindFirebaseRef
-        }, ref) => {
+        setPostsRef: firebaseAction(({ bindFirebaseRef }, ref) => {
             bindFirebaseRef('posts', ref)
         }),
     },

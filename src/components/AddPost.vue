@@ -49,8 +49,6 @@ export default {
                 postAuthorEmail: firebase.auth().currentUser.email
             },
             tagToAdd: '',
-            arrayDasCategorias: [],
-            msgSucessoErro: '',
         }
     },
     firebase: {
