@@ -1,0 +1,94 @@
+.lista-posts {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid $cinza-claro;
+    font-family: $lato;
+    thead {
+        th {
+            color: $texto;
+            padding: 10px;
+            background: darken($cinza-mais-claro, 10%);
+            border-bottom: 1px solid $cinza-claro;
+            &:first-child {
+                border-radius: 5px 0 0 0;
+            }
+            &:last-child {
+                border-radius: 0 5px 0 0;
+            }
+        }
+    }
+    tbody {
+        tr {
+            border: 1px solid $cinza-claro;
+            background: $cinza-mais-claro;
+            width: 100%;
+            td {
+                padding: 15px;
+                border-right: 1px solid $cinza-claro;
+                vertical-align: middle;
+                &:last-child {
+                    border-right: none;
+                }
+            }
+            &:nth-child(2n) {
+                background: darken($cinza-mais-claro, 5%)
+            }
+            &:last-child {
+                td {
+                    &:first-child {
+                        border-radius: 0 0 0 5px;
+                    }
+                    &:last-child {
+                        border-radius: 0 0 5px 0;
+                    }
+                }
+            }
+            .postlist-excerpt {
+                width: 360px;
+            }
+            .postlist-actions {
+                width: 130px;
+                text-align: center;
+                padding-top: 15px;
+                button {
+                    cursor: pointer;
+                    border-radius: 5px;
+                    background: darken($cinza-mais-claro, 2%);
+                    border: 1px solid $cinza-claro;
+                    padding: 10px;
+                    width: 100%;
+                    transition: .3s;
+                    margin: 0 0 5px;
+                    font-size: .75em;
+                    &:hover {
+                        background: darken($cinza-mais-claro, 5%);
+                    }
+                }
+            }
+            .postlist-tags {
+                width: 200px;
+                .postlist-post-single-tag {
+                    display: inline-block;
+                    border-radius: 5px;
+                    background: darken($cinza-mais-claro, 2%);
+                    border: 1px solid $cinza-claro;
+                    padding: 5px;
+                    font-family: $courgette;
+                    font-size: .80em;
+                    color: darken($cinza-claro, 40%);
+                    margin: 0 5px 5px 0;
+                    &:after {
+                        display: inline-block;
+                        content: '';
+                        border-radius: 50%;
+                        border: 1px solid $cinza-claro;
+                        width: 7px;
+                        height: 7px;
+                        background: $branco;
+                        margin: 0 0 0 7px;
+                    }
+                }
+            }
+        }
+    }
+}

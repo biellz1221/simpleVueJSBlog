@@ -1,12 +1,57 @@
 <template>
     <div>
-        teste lista de posts
+        <table class='lista-posts'>
+            <thead>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Categoria</th>
+                <th>Resumo</th>
+                <th>Tags</th>
+                <th>Ações</th>
+            </thead>
+            <tbody>
+                <tr v-for="(post, index) in postPages[actualPage]" :key='index'>
+                    <td class="postlist-title">{{post.postTitle}}</td>
+                    <td class="postlist-author">{{post.postAuthorEmail}}</td>
+                    <td class="postlist-category">{{post.postCategory}}</td>
+                    <td class="postlist-excerpt">{{post.postExcerpt}}</td>
+                    <td class="postlist-tags">
+                        <span class='postlist-post-single-tag' v-for="(tag, index) in post.postTags" :key="index">{{tag}}</span>
+                    </td>
+                    <td class="postlist-actions">
+                        <span>
+                            <button>
+                                Editar <i class="fa fa-pencil fa-fw"></i>
+                            </button>
+                            <button @click="removeItem('posts',post['.key'])">
+                                Excluir <i class="fa fa-trash fa-fw"></i>
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <v-pages items="posts" itemsPerPage='4' :change='reload'></v-pages>
+        <v-msg :message='msgSucessoErro' :change='change'></v-msg>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { slug, trocaMsg, reloadItems, removeItem } from '../mixins';
 export default {
-
+    mixins: [ slug, trocaMsg, reloadItems, removeItem ],
+    computed:{
+        ...mapGetters([
+            'posts',
+            'postPages',
+            'actualPage',
+            'loaded'
+        ]),
+    },
+    methods: {
+        
+    }
 }
 </script>
 

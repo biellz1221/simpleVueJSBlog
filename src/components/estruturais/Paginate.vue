@@ -118,7 +118,6 @@ export default {
     },
     watch: {
         change: function (val, oldVal) {
-            //console.log("prop change mudou de "+oldVal+" para "+val);
             this.loadAll()
         }
     }

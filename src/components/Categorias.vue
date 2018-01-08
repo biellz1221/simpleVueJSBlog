@@ -11,8 +11,29 @@
                             </li>
                         </transition>
                         <li v-for="(categoria, index) in catPages[actualPage]" :key='index'>
-                            <span>{{categoria.nome}}</span>
-                            <button class="remove-cat" @click="removeCategory(categoria['.key'])"><i class="fa fa-times"></i></button>
+                            <span v-if="editCat.catIndex === index">
+                                <input type="text" v-model='editCat.catNome'>
+                                <span class="btn-actions">
+                                    <button class="remove-cat" @click="saveEdit(categoria['.key'])">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                    <button class="remove-cat" @click="cancelEdit">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </span>
+                            </span>
+                            <span v-else-if="editCat.catIndex != index">
+                                <span>{{categoria.nome}}</span>
+                                <span class="btn-actions">
+                                    <button class="edit-cat" @click="editCategory(categoria.nome, index)">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button class="remove-cat" @click="removeItem('categorias', categoria['.key'])">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </span>
+                            </span>
+                            
                         </li>
                     </ul>
                     <v-pages items="categorias" itemsPerPage='2' :change='reload'></v-pages>
@@ -21,15 +42,11 @@
                 <div class="inserir-categoria">
                     <span class="insira-categoria">Insira uma Categoria</span>
                     <p>Basta digitar o nome e apertar em inserir.</p>
-                    <input type="text" name="categoria" placeholder="Nome da Categoria" v-model='categoria' @keyup.enter="insereCategoria" maxlength="30">
+                    <input type="text" name="categoria" placeholder="Nome da Categoria" v-model='categoria.nome' @keyup.enter="insereCategoria" maxlength="30">
                     <button @click="insereCategoria">Inserir</button>
                 </div>
             </div>
-            <transition name="fade">
-                <div class="div-info info-success" v-if="mostraMsg">
-                    {{msgSucessoErro}}
-                </div>
-            </transition>
+            <v-msg :message='msgSucessoErro' :change='change'></v-msg>
         </linha-container>
         
 
@@ -37,15 +54,21 @@
 </template>
 
 <script>
-import {fbDB} from '../fbConfig';
+import { fbDB } from '../fbConfig';
 import { mapGetters } from 'vuex';
+import { slug, trocaMsg, reloadItems, removeItem } from '../mixins';
 export default {
+    mixins: [ slug, trocaMsg, reloadItems, removeItem ],
     data: () => {
         return {
-            categoria: '',
-            msgSucessoErro: '',
-            mostraMsg: false,
-            reload: false,
+            editCat: {
+                catIndex: null, 
+                catNome: ''
+            },
+            categoria: {
+                nome: '',
+                slug: '',
+            },
         }
     },
     computed:{
@@ -57,31 +80,37 @@ export default {
         ]),
     },
     methods: {
-        showMsg(message) {
-            this.msgSucessoErro = message;
-            this.mostraMsg = true;
-            setTimeout(() => {this.mostraMsg = false}, 1500);
-        },
         insereCategoria(){
             if (this.categoria) {
                 fbDB.ref('categorias').push({
-                    nome: this.categoria,
+                    nome: this.categoria.nome.trim(),
+                    slug: this.slugify(this.categoria.nome),
                 });
-                this.categoria = '';
-                this.showMsg('Categoria inserida com sucesso!');
-                this.reloadCat();
+                this.categoria.nome = '';
+                this.categoria.slug = '';
+                this.trocaMsg('Categoria inserida com sucesso!')
+                this.reloadItems();
             } else {
                 alert("Não pode inserir uma categoria sem nome!");
             };
         },
-        reloadCat() {
-            this.reload = !this.reload;
+        editCategory(nomeCategoria, catIndex) {
+            this.editCat.catNome = nomeCategoria;
+            this.editCat.catIndex = catIndex;
         },
-        removeCategory(key) {
-            fbDB.ref('categorias').child(key).remove();
-            this.showMsg('Categoria removida com sucesso!');
-            this.reloadCat();
-        }
+        saveEdit(key) {
+            fbDB.ref('categorias').child(key).update({
+                nome: this.editCat.catNome,
+                slug: this.slugify(this.editCat.catNome),
+            });
+            this.trocaMsg('Categoria editada com sucesso!')
+            this.reloadItems();
+            this.cancelEdit();
+        },
+        cancelEdit() {
+            this.editCat.catNome = '';
+            this.editCat.catIndex = null;
+        },
     }
 }
 </script>

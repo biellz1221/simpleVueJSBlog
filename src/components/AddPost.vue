@@ -3,6 +3,7 @@
         <div class="campo">
             <!-- <label for="titulo">Título</label> -->
             <input type="text" name="titulo" v-model="newPost.postTitle" placeholder="Título do Post">
+            {{slugify(this.newPost.postTitle)}}
         </div>
         <div class="campo">
             <label for="resumo">Resumo do Post</label>
@@ -25,24 +26,22 @@
         </div>
         <div class="campo"><button @click="addPost(newPost)">Adicionar Post</button></div>
         <button @click="clean">Limpar</button>
-        <transition name="fade">
-            <div class="div-info info-success" v-if="mostraMsg">
-                {{msgSucessoErro}}
-            </div>
-        </transition>
+        <v-msg :message='msgSucessoErro' :change='change'></v-msg>
     </div>
 </template>
 
 <script>
 import {fbDB} from '../fbConfig';
 import firebase from 'firebase';
-
-import { quillEditor } from 'vue-quill-editor'
+import { quillEditor } from 'vue-quill-editor';
+import { slug, trocaMsg } from '../mixins';
 export default {
+    mixins: [slug, trocaMsg],
     data: () => {
         return {
             newPost: {
                 postTitle: '',
+                postSlug: '',
                 postExcerpt: '',
                 postContent: '',
                 postCategory: '',
@@ -51,22 +50,13 @@ export default {
             },
             tagToAdd: '',
             arrayDasCategorias: [],
-            msgSucessoErro: 'Post salvo com sucesso!',
-            mostraMsg: false,
-            loaded: false,
+            msgSucessoErro: '',
         }
     },
     firebase: {
         categorias: {
             source: fbDB.ref('categorias'),
         }
-    },
-    computed: {
-        excerpt() {
-            
-        }
-    },
-    mounted() {
     },
     methods: {
         clean() {
@@ -77,11 +67,10 @@ export default {
             this.newPost.postTags = [];
         },
         addPost(post) {
+            this.newPost.postSlug = this.slugify(this.newPost.postTitle);
             if (this.newPost.postTitle && this.newPost.postContent && this.newPost.postCategory && this.newPost.postExcerpt) {
                 fbDB.ref('posts').push(post);
-                this.mostraMsg = true;
-                console.log("inseriu post")
-                setTimeout(() => {this.mostraMsg = false}, 1500);
+                this.trocaMsg('Post inserido com sucesso!');
                 this.clean();
             } else if(!this.newPost.postTitle) {
                 alert("Não pode inserir um post sem título!")
