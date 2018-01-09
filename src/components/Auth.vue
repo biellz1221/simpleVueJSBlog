@@ -1,6 +1,7 @@
 <template>
     <div>
         <div v-if="!cUser">
+            <v-title pageTitle='Entrar'></v-title>
             <input type="email" name="email" v-model="email" placeholder="Email">
             <input type="password" name="password" v-model="password" placeholder="Senha">
             <button @click="login">Login</button>

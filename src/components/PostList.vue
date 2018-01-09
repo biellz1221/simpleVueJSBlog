@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-title pageTitle='Lista de Posts'></v-title>
         <table class='lista-posts'>
             <thead>
                 <th>Título</th>
@@ -11,7 +12,7 @@
             </thead>
             <tbody>
                 <tr v-for="(post, index) in postPages[actualPage]" :key='index'>
-                    <td class="postlist-title">{{post.postTitle}} // {{post.postSlug}}</td>
+                    <td class="postlist-title">{{post.postTitle}}</td>
                     <td class="postlist-author">{{post.postAuthorEmail}}</td>
                     <td class="postlist-category">{{post.postCategory}}</td>
                     <td class="postlist-excerpt">{{post.postExcerpt}}</td>
@@ -53,7 +54,7 @@ export default {
         editPost(key){
             console.log(key);
             this.$store.commit('setEditPostKey', key);
-            this.$router.push( { path: `/posts/edit/${key}` } )   
+            this.$router.push( { path: `/posts/edit/${key}` } )
         }
     }
 }

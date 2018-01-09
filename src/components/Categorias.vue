@@ -1,6 +1,7 @@
 <template>
     <div>
         <linha-container>
+            <v-title pageTitle='Categorias'></v-title>
             <div class="flex-container categorias">
                 <div class="lista-categorias">
                     <span class="titulo-lista">Lista de Categorias</span>
@@ -48,8 +49,6 @@
             </div>
             <v-msg :message='msgSucessoErro' :change='change'></v-msg>
         </linha-container>
-        
-
     </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
-      Foi porra! TOMAR NO CÚ!
-	  <button @click="logOut">Vaza Caralho!</button>
+      <v-title pageTitle='Painel'></v-title>
+	  <button @click="logOut">Log Out</button>
   </div>
 </template>
 

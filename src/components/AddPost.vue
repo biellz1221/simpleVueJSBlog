@@ -1,31 +1,30 @@
 <template>
     <div>
-        <div class="campo">
-            <!-- <label for="titulo">Título</label> -->
+        <v-title pageTitle='Adicionar Post'></v-title>
+        <div class="campo form-post-title">
             <input type="text" name="titulo" v-model="newPost.postTitle" placeholder="Título do Post">
-            {{slugify(this.newPost.postTitle)}}
+            <span class="slug">{{slugify(this.newPost.postTitle)}}</span>
         </div>
-        <div class="campo">
+        <div class="campo form-post-excerpt">
             <label for="resumo">Resumo do Post</label>
             <textarea name="resumo" id="" maxlength="300" v-model="newPost.postExcerpt"></textarea>
         </div>
         <div class="campo q-editor">
             <quill-editor v-model="newPost.postContent"></quill-editor>
         </div>
-        <div class="campo">
+        <div class="campo form-post-category">
             <label for="categorias">Categoria</label>
             <select name="categorias" v-model="newPost.postCategory">
                 <option v-for="(categoria, index) in categorias" :key="index" :value="categoria.nome">{{categoria.nome}}</option>
             </select>
         </div>
-        <div class="campo">
+        <div class="campo form-post-tags">
             <label for="tags">Tags</label>
             <input type="text" name="tags" @keydown.enter="addTag" placeholder="Tags saparated by comma" v-model="tagToAdd">
             <button @click="addTag">Inserir Tag</button><br>
             <button class="new-post-tag" v-for="(tag, index) in newPost.postTags" :key="index" @click="removeTag(index)">{{tag}}</button>
         </div>
-        <div class="campo"><button @click="addPost(newPost)">Adicionar Post</button></div>
-        <button @click="clean">Limpar</button>
+        <div class="campo form-post-btn-add"><button @click="addPost(newPost)">Adicionar Post</button></div>
         <v-msg :message='msgSucessoErro' :change='change'></v-msg>
     </div>
 </template>

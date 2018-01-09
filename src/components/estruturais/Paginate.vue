@@ -4,7 +4,7 @@
         <button @click="pagination('prev')" v-if="actualPage > 0" class="btn-pag-prev">
             <i class="fa fa-angle-left"></i>
         </button>
-        <span v-if="items === 'categorias'">
+        <span v-if="items === 'categorias' && catPages.length > 1">
             <span class="paginate-numbers">
                 <span v-for="(npag,index) in catPages" :key="index" :title="npag" :class="'paginate-number-'+index">
                     <span v-if="index === actualPage" class="paginate-active">
@@ -17,7 +17,7 @@
                 <i class="fa fa-angle-right"></i>
             </button>
         </span>
-        <span v-if="items === 'posts'">
+        <span v-if="items === 'posts' && postPages.length > 1">
             <span class="paginate-numbers">
                 <span v-for="(npag,index) in postPages" :title="npag" :key="index" :class="'paginate-number-'+index">
                     <span v-if="index === actualPage" class="paginate-active">

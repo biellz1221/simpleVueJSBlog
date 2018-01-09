@@ -10,6 +10,7 @@ import {store} from './store'
 import LinhaContainer from './components/estruturais/LinhaContainer.vue'
 import paginator from './components/estruturais/Paginate.vue'
 import msgComp from './components/estruturais/MsgSucErr.vue'
+import pageTitle from './components/estruturais/PageTitle.vue'
 
 
 
@@ -18,6 +19,7 @@ Vue.use(VueFire);
 Vue.component('linha-container', LinhaContainer);
 Vue.component('v-pages', paginator);
 Vue.component('v-msg', msgComp);
+Vue.component('v-title', pageTitle)
 
 firebase.auth().onAuthStateChanged(function(user){
 	new Vue({
