@@ -3,6 +3,7 @@ export const slug = {
     methods: {
         slugify(text){
             return text.toString().toLowerCase()
+                .normalize('NFD') 				// separate accent from letter
                 .replace(/\s+/g, '-')           // Replace spaces with -
                 .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
                 .replace(/\-\-+/g, '-')         // Replace multiple - with single -

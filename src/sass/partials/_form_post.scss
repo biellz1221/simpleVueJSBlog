@@ -1,0 +1,130 @@
+.campo {
+    width: 100%;
+    font-family: $lato;
+}
+.form-post-title {
+    input {
+        width: 100%;
+        font-size: 1.5em;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        border: 1px solid $cinza-claro;
+        border-bottom: none;
+        font-family: $lato;
+    }
+    .slug {
+        display: block;
+        padding: 10px;
+        background: darken($cinza-mais-claro, 8%);
+        color: darken($texto, 15%);
+        font-style: italic;
+        border-left: 1px solid $cinza-claro;
+        border-right: 1px solid $cinza-claro;
+        &:before {
+            content: 'Slug do Post: ';
+        }
+    }
+}
+.form-post-excerpt {
+    position: relative;
+    label {
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-weight: bold;
+        color: lighten($texto, 5%);
+        font-family: $courgette;
+    }
+    textarea {
+        box-sizing: border-box;
+        padding: 10px 10px 10px 135px;
+        line-height: 1.2em;
+        width: 100%;
+        height: 100px;
+        border: 1px solid $cinza-claro;
+        margin: 0 0 -3px 0;
+        resize: vertical;
+    }
+    .charcount {
+        display: inline-block;
+        position: absolute;
+        right: 15px;
+        bottom: 10px;
+        color: lighten($texto, 10%);
+        font-style: italic;
+        font-family: $lato;
+        font-size: .9em;
+    }
+}
+.form-post-category, 
+.form-post-tags {
+    padding: 10px;
+    border-left: 1px solid $cinza-claro;
+    border-right: 1px solid $cinza-claro;
+    border-bottom: 1px solid $cinza-claro;
+    label {
+        font-weight: bold;
+        color: $texto;
+        font-family: $courgette;
+        padding: 0 10px 0 0;
+        display: inline-block;
+    }
+    input, select {
+        padding: 10px;
+        border: 1px solid $cinza-claro;
+        border-radius: 5px;
+        position: relative;
+        z-index: 3;
+    }
+}
+.form-post-tags {
+    button.post-btn-add-tag {
+        padding: 10px 15px;
+        margin: 0 15px 15px -6px;
+        border-radius: 0 5px 5px 0;
+        border: 1px solid $cinza-claro;
+        position: relative;
+        z-index: 2;
+        background: $branco;
+        cursor: pointer;
+        transition: .3s;
+        color: $texto;
+        &:hover {
+            background: darken($cinza-mais-claro, 5%)
+        }
+    }
+    button.new-post-tag {
+        padding: 8px;
+        margin: 0 5px 5px 0;
+        background: $branco;
+        cursor: pointer;
+        transition: .3s;
+        color: $texto;
+        border: 1px solid $cinza-claro;
+        font-family: $courgette;
+        border-radius: 5px;
+        &:hover {
+            background: darken($cinza-mais-claro, 5%)
+        }
+    }
+}
+.form-post-btn {
+    button {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        border: 1px solid $cinza-claro;
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+        font-weight: bold;
+        color: $texto;
+        transition: .3s;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-family: $lato;
+        &:hover {
+            background: darken($cinza-mais-claro, 5%)
+        }
+    }
+}

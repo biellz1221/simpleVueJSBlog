@@ -38,6 +38,15 @@ body {
     }
 }
 
+h2 {
+    font-family: 'Courgette';
+    font-size: 2.5em;
+    margin: 0 0 25px;
+    color: darken($texto, 10%);
+}
+
 @import 'partials/menu';
 @import 'partials/categorias';
 @import 'partials/post_list';
+@import 'partials/posts';
+@import 'partials/form_post';

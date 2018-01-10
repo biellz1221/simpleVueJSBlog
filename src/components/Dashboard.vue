@@ -1,8 +1,10 @@
 <template>
-  <div>
-      <v-title pageTitle='Painel'></v-title>
-	  <button @click="logOut">Log Out</button>
-  </div>
+	<div>
+		<linha-container>
+			<v-title pageTitle='Painel'></v-title>
+			<button @click="logOut">Log Out</button>
+		</linha-container>
+	</div>
 </template>
 
 <script>

@@ -6,7 +6,7 @@
             <ul>
                 <li v-if="cUser"><router-link to="/admin"><span>Painel</span></router-link></li>
                 <li v-if="cUser"><router-link to="/categorias"><span>Categorias</span></router-link></li>
-                <li v-if="cUser"><router-link to="/posts"><span>Posts</span></router-link></li>
+                <li v-if="cUser"><router-link to="/posts/list"><span>Posts</span></router-link></li>
             </ul>
         </nav>
     </div>

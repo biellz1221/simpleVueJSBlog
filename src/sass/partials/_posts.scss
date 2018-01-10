@@ -1,0 +1,15 @@
+.btn-posts {
+    padding: 8px;
+    margin: 0 5px 25px 0;
+    display: inline-block;
+    background: $branco;
+    cursor: pointer;
+    transition: .3s;
+    color: $texto;
+    border: 1px solid $cinza-claro;
+    font-family: $lato;
+    border-radius: 5px;
+    &:hover {
+        background: darken($cinza-mais-claro, 5%)
+    }
+}

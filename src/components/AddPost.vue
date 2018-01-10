@@ -6,25 +6,28 @@
             <span class="slug">{{slugify(this.newPost.postTitle)}}</span>
         </div>
         <div class="campo form-post-excerpt">
-            <label for="resumo">Resumo do Post</label>
+            <label for="resumo">Resumo do Post: </label>
             <textarea name="resumo" id="" maxlength="300" v-model="newPost.postExcerpt"></textarea>
+            <span class="charcount">{{charcount}}/300</span>
         </div>
         <div class="campo q-editor">
             <quill-editor v-model="newPost.postContent"></quill-editor>
         </div>
         <div class="campo form-post-category">
-            <label for="categorias">Categoria</label>
+            <label for="categorias">Categoria:</label>
             <select name="categorias" v-model="newPost.postCategory">
                 <option v-for="(categoria, index) in categorias" :key="index" :value="categoria.nome">{{categoria.nome}}</option>
             </select>
         </div>
         <div class="campo form-post-tags">
-            <label for="tags">Tags</label>
-            <input type="text" name="tags" @keydown.enter="addTag" placeholder="Tags saparated by comma" v-model="tagToAdd">
-            <button @click="addTag">Inserir Tag</button><br>
-            <button class="new-post-tag" v-for="(tag, index) in newPost.postTags" :key="index" @click="removeTag(index)">{{tag}}</button>
+            <label for="tags">Tags:</label>
+            <input type="text" name="tags" @keydown.enter="addTag" placeholder="Tags separadas por vírgula" v-model="tagToAdd">
+            <button class='post-btn-add-tag' @click="addTag"><i class="fa fa-plus"></i></button>
+            <button class="new-post-tag" v-for="(tag, index) in newPost.postTags" :key="index" @click="removeTag(index)">
+                {{tag}} <i class="fa fa-times"></i>
+            </button>
         </div>
-        <div class="campo form-post-btn-add"><button @click="addPost(newPost)">Adicionar Post</button></div>
+        <div class="campo form-post-btn"><button @click="addPost(newPost)"><i class="fa fa-check"></i> Adicionar Post</button></div>
         <v-msg :message='msgSucessoErro' :change='change'></v-msg>
     </div>
 </template>
@@ -48,6 +51,11 @@ export default {
                 postAuthorEmail: firebase.auth().currentUser.email
             },
             tagToAdd: '',
+        }
+    },
+    computed: {
+        charcount: function() {
+            return this.newPost.postExcerpt.length;
         }
     },
     firebase: {
